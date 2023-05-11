@@ -1,5 +1,7 @@
 package Pacote3;
 
+import java.util.InputMismatchException;
+
 public class Carro {
     private String letrasPlaca;
     private int numerosPlaca;
@@ -32,13 +34,20 @@ public class Carro {
     }
 
     public void setPlaca(String placa) {
-        if (placa != null && placa.length() == 7 &&
-            placa.matches("[A-Z]{3}\\d{4}")) {
-            this.letrasPlaca = placa.substring(0, 3); //ABC
-            this.numerosPlaca = Integer.parseInt(placa.substring(3)); //1234
-        } else {
-            this.letrasPlaca = "ERRO!!!";
+        if (placa == null) {
+            throw new NullPointerException("O valor da placa não pode ser nulo.");
         }
+
+        if (placa.length() != 7) {
+            throw new InputMismatchException("A placa deve ter 7 caracteres.");
+        }
+
+        if (!placa.matches("[A-Z]{3}\\d{4}")) {
+            throw new InputMismatchException("A placa deve ser composta por 3 letras e 4 números.");
+        }
+
+        this.letrasPlaca = placa.substring(0, 3); //ABC
+        this.numerosPlaca = Integer.parseInt(placa.substring(3)); //1234
     }
     
 
